@@ -9,7 +9,7 @@ module.exports = {
                 return res;
             })
             .catch((err) => {
-                console.log('createNewUser error');
+                console.log('createNewUser error', err);
             })
     },
 
@@ -21,7 +21,29 @@ module.exports = {
                 return res;
             })
             .catch((err) => {
-                console.log('updateUser error');
+                console.log('updateUser error', err);
+            })
+    },
+
+    async readUser(agent, id) {
+        return await agent
+            .get(`${config.apiURL}/api/users/${id}`)
+            .then((res) => {
+                return res;
+            })
+            .catch((err) => {
+                return err;
+            })
+    },
+
+    async deleteUser(agent, id) {
+        return await agent
+            .delete(`${config.apiURL}/api/users/${id}`)
+            .then((res) => {
+                return res;
+            })
+            .catch((err) => {
+                console.log('deleteUser error', err);
             })
     },
 };

@@ -1,4 +1,4 @@
-const { Given, When, Then } = require('@cucumber/cucumber');
+const { When, Then } = require('@cucumber/cucumber');
 
 const userHelper = require('../helpers/userHelper');
 const agent = require('../helpers/superagentHelper');
@@ -25,4 +25,30 @@ When('user updated', async function () {
 Then('check that user was updated', function () {
     expect(this.res.statusCode).to.equal(200);
     expect(this.res.body.name).to.equal(updateUser.name);
+});
+
+//TODO working with default parameters
+When('user read', async function () {
+    this.res = await userHelper.readUser(agent, 2);
+});
+
+Then('check that user was read', function () {
+    expect(this.res.statusCode).to.equal(200);
+    expect(this.res.body.data['first_name']).to.equal("Janet");
+});
+
+When('user delete', async function () {
+    this.res = await userHelper.deleteUser(agent, this.userId);
+});
+
+Then('check that user was deleted', function () {
+    expect(this.res.statusCode).to.equal(204);
+});
+
+When('try to read deleted user', async function () {
+    this.res = await userHelper.readUser(agent, this.userId);
+});
+
+Then('check that deleted user was read', function () {
+    expect(this.res.status).to.equal(404);
 });

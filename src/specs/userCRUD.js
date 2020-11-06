@@ -21,19 +21,23 @@ describe('User CRUD', function() {
         expect(res.body.name).to.equal(updateUser.name);
     });
 
-    // it('Read user', async function() {
-    //     let res = await userHelper.readUser(agent, userId);
-    //     expect(res.statusCode).to.equal(200);
-    //     expect(res.body.name).to.equal(user.name);
-    // });
-    //
-    // it('Delete user', async function() {
-    //     let res = await userHelper.deleteUser(agent, userId);
-    //     expect(res.statusCode).to.equal(200);
-    // });
-    //
-    // it('Read user', async function() {
-    //     let res = await userHelper.readUser(agent, userId);
-    //     expect(res.statusCode).to.equal(404);
-    // });
+    //TODO working with default parameters
+    it('Read user', async function() {
+        let res = await userHelper.readUser(agent, 2);
+
+        expect(res.statusCode).to.equal(200);
+        expect(res.body.data['first_name']).to.equal("Janet");
+    });
+
+    it('Delete user', async function() {
+        let res = await userHelper.deleteUser(agent, userId);
+
+        expect(res.statusCode).to.equal(204);
+    });
+
+    it('Read user', async function() {
+        let res = await userHelper.readUser(agent, userId);
+
+        expect(res.status).to.equal(404);
+    });
 });
